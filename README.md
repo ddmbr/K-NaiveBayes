@@ -13,8 +13,8 @@ For example, if I have some data about programmers' heights and the level of the
 
     >>> import nb
     >>> clf = nb.NB()
-    >>> X = [[169], [172], [185], [182], [162], [160], [190]]
-    >>> y = ['guru', 'guru', 'beginner', 'beginner', 'ok', 'ok']
+    >>> X = [[169], [172], [185], [182], [162], [160], [190], [192]]
+    >>> y = ['guru', 'guru', 'beginner', 'beginner', 'ok', 'guru', 'guru']
     >>> clf.fit(X, y)
 
 This builds the classifier. And then I enter my height.
