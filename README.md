@@ -22,7 +22,7 @@ This builds the classifier. And then I enter my height.
     >>> clf.predict([171])
     'guru'
 
-It can continue to learn after. You can continue to use:
+It can continue to learn after this. You can continue to use:
 
     >>> clf.fit([[200]], ['super'])
 
