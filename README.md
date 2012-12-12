@@ -1,10 +1,10 @@
 Naive Bayes with KDE(Kernel Density Estimation)
 ===============================================
 
-This method mainly has two feature, I'll introduce them non-technically:
+This method mainly has two features, I'll introduce them non-technically:
 
-1. There's not assumption about the distribution of the data, and the probabilities are derived by KDE so the result should be more reliable. Some test show that this method outperforms the Gaussian Naive Bayes provided by [scikit-learn](http://scikit-learn.org)(I'll upload the test details afterwards).
-2. It has a memory to 'remember' the things it learn. This also allow it to, first, learn while working, and second, forget things that are too old.
+1. There's not assumption about the distribution of the data, and the probabilities are derived by KDE so the result should be more reliable. Some test shows that this method outperforms the Gaussian/Multinomial Naive Bayes provided by [scikit-learn](http://scikit-learn.org)(I'll upload the test details afterwards).
+2. It has a memory to 'remember' the things it learns. This also allow it to, first, learn while working, and second, forget things that are too old.
 
 Quick Start
 ------------
@@ -29,3 +29,9 @@ It can continue to learn after this. You can continue to use:
 , if you have new train case.
 
 More details to be added
+
+TODOs
+-------
+
+1. There's no bandwidth selection in the KDE currently. I'll fix it ASAP.
+2. It's slow. More optimization needed.
