@@ -1,5 +1,6 @@
 import scipy.stats
 import numpy as np
+import utils
 
 class NB:
     def __init__(self):
@@ -25,17 +26,34 @@ class NB:
         d = len(self.classes)
         return n * 1.0 /d
 
-    def predict(self, data):
-        score = map(self.class_prob, self.all_class)
-        for i in range(len(self.all_class)):
-            for col in range(self.train_set.shape[1]):
-                den = 0
-                for row in range(self.train_set.shape[0]):
-                    if self.classes[row] != self.all_class[i]:
-                        continue
-                    den += self.kernel_g(self.train_set[row, col], data[col])
-                score[i] *= den
-        return self.all_class[np.argmax(score)]
+    def _joint_log_likelihood(self, X):
+        X = utils.array2d(X)
+        jll = np.zeros((X.shape[0], np.size(self.all_class)))
+        for i in range(np.size(self.all_class)):
+            jll[:,i] += np.log(self.class_prob(self.all_class[i]))
+        #print jll
+        for i, x in enumerate(X):
+            for cls in self.all_class:
+                #prob = 1e-31
+                prob = 0
+                for j, f in enumerate(self.train_set):
+                    if self.classes[j] != cls: continue
+                    prob += self.kernel_g(x - f)
+                    #print x, f, prob, self.kernel_g(x - f)
+                c = np.where(self.all_class == cls)
+                #print prob
+                jll[i, c] += np.log(prob)
+        #print jll
+        return jll.T
 
-    def kernel_g(self, a, b):
-        return scipy.stats.norm(0, 1).pdf(a - b)
+    def predict(self, X):
+        jll = self._joint_log_likelihood(X)
+        return self.all_class[np.argmax(jll, axis=0)]
+
+    def kernel_g(self, x):
+        x = utils.array1d(x)
+        #print x
+        res = 1
+        for col in x:
+            res *= scipy.stats.norm(0, 1).pdf(col)
+        return res
